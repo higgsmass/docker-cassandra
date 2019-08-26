@@ -23,7 +23,7 @@ The docker image is based off [abh1nav/cassandra](https://registry.hub.docker.co
 Starting this cluster is as simple as
 
 ```
-$docker-compose up -d
+$docker-compose -f docker-compose-cluster.yml up -d
 ```
 
 The following services are started should start the following:
