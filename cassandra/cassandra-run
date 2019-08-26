@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# set up datacenter name
+cat /cassandra_src/cassandra.yaml | sed -e s/{CLUSTERNAME}/$CLUSTERNAME/g > /opt/cassandra/conf/cassandra.yaml
+cat /cassandra_src/cassandra-rackdc.properties | sed -e s/{DC}/$DATACENTER/g > /opt/cassandra/conf/cassandra-rackdc.properties
+
+# Start server
+cd /opt/cassandra
+bin/cassandra -f
