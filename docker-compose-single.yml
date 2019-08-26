@@ -1,0 +1,36 @@
+# Please note we are using Docker Compose version 3
+version: '3'
+networks:
+    wlring:
+services:
+    # seed_node is the first node that gets bootstrapped
+    # .i.e Node 1 in Data center 1.
+    seed_node:
+        build: cassandra
+        environment: 
+            - DATACENTER=WATERL00
+            - CLUSTERNAME=lens
+        container_name: node00
+        hostname: node00
+        networks:
+            - wlring
+        # Exposing ports for inter cluste communication
+        expose:
+            - 7000 # Intra-node communication
+            - 7001 # TLS intra-node communication
+            - 7199 # JMX
+            - 9042 # CQL
+            - 9160 # Thrift service
+        ulimits:
+            memlock: -1
+
+    nodeops:
+        build: opscenter
+        container_name: nodeops
+        hostname: ops
+        ports:
+            - "8888:8888"
+            - "61620:61620"
+        networks:
+            - wlring
+
